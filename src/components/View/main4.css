@@ -1,0 +1,116 @@
+.carousel {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.image {
+    width: auto;
+    height: auto;
+}
+
+.boardList {
+    display: flex;
+    justify-content: center;
+    padding: 100px 0;
+    gap: 20px;
+}
+
+.board {}
+
+.boardList ul {
+    display: table;
+    margin: auto;
+    padding: 0;
+}
+
+.boardList3 {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.include-carousel .boardList li {
+    float: left;
+    text-align: center;
+    display: inline-block;
+}
+
+.include-carousel .board {
+    display: flex;
+    background-color: azure;
+}
+
+.include-carousel .board-title {
+    width: 300px;
+    height: 50px;
+    font-size: 17px;
+    text-align: center;
+    margin-left: 13px;
+}
+
+.include-carousel .board-content {
+    width: 300px;
+    font-size: 17px;
+    text-align: center;
+}
+
+.one-two {
+    display: flex;
+}
+
+.three-four {
+    display: flex;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid gray;
+    z-index: 9999;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.card-container>* {
+    flex-basis: calc(25% - 10px);
+    margin: 5px;
+
+}
+
+.board-write {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+}
+
+.card-content {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    /* 원하는 줄 수 설정 */
+    text-overflow: ellipsis;
+}
+
+.container {
+    font-size: 13px;
+}
+
+.image {
+    width: 700px;
+    height: 400px;
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+.carousel {
+    top: 100px;
+    width: 700px;
+}

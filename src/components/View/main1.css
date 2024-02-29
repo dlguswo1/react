@@ -1,0 +1,130 @@
+/* 전체 패딩 */
+section.notice {}
+
+/* 케러셀과 간격 */
+.page-title {
+    margin-bottom: 40px;
+}
+
+/* 케러셀과 안에 타이틀 */
+.page-title h3 {
+    font-size: 28px;
+    font-weight: 400;
+    text-align: center;
+}
+
+/* 검색바 바탕 */
+#board-search .search-window {
+    padding: 15px 0;
+    background-color: #f9f7f9;
+    height: 50px;
+    text-align: center;
+    margin-top: 150px;
+}
+
+/* 게시판 테이블 */
+.board-table {
+    font-size: 13px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+/* 번호, 제목, 등록일 정중앙 */
+.board-table th {
+    text-align: center;
+}
+
+/* 번호, 제목, 등록일 간격 */
+.board-table .th-num {
+    width: 100px;
+    text-align: center;
+}
+
+/* 제목 등록일 간격*/
+.board-table .th-date {
+    width: 200px;
+}
+
+/* 테이블 게시판 padding 수직 */
+.board-table th,
+.board-table td {
+    padding: 14px 0;
+}
+
+/* 번호, 제목, 등록일에 내용 간격 */
+.board-table tbody td {
+    border-top: 1px solid #e7e7e7;
+    text-align: center;
+}
+
+/* 제목 */
+.board-table tbody th {
+    padding-left: 28px;
+    padding-right: 14px;
+    border-top: 1px solid #e7e7e7;
+    text-align: left;
+}
+
+/* 제목 글자 넘어가면 */
+.board-table tbody th p {
+    display: none;
+}
+
+.blind {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    width: 1px;
+    height: 1px;
+}
+
+.map-content {
+    text-align: center;
+}
+
+.board-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.notice {
+    background-color: #DCDCDC;
+    padding: 1px 0;
+
+}
+
+.card-body {
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20220218/pngtree-grey-rice-paper-texture-newspaper-background-image_960026.jpg');
+}
+
+.carousel {
+    width: 700px;
+    position: relative;
+}
+
+#board-list {
+    padding-bottom: 200px;
+}
+
+.up-bg {
+    background-color: #DCDCDC;
+}
+
+.popup {}
+
+.popup-content {
+    max-height: 79vh;
+    overflow-y: scroll;
+}
+
+.popup-content img {
+    display: block;
+    margin: 0 auto;
+}
+
+.popup-content h4 {
+    text-align: center;
+}

@@ -1,0 +1,51 @@
+.member {
+    height:calc(100vh - 200px);
+    display: flex;
+    justify-content: center;
+    align-items : center;
+}
+.member .login {
+    width: 360px;
+    padding: 1rem;
+}
+.member .login button{
+    width: 326px;
+}
+.member .login a{
+    text-decoration-line: none;
+    color : gray;
+}
+
+.member .join {
+    margin-top: 100px;
+    width: 360px;
+    padding: 1rem;
+    margin-bottom: 100px;
+}
+
+.member .join button{
+    width: 326px;
+}
+
+.member .findid {
+    width: 360px;
+    padding: 1rem;
+}
+.member .findid button{
+    width: 326px;
+}
+
+.member .findok {
+    width: 360px;
+    padding: 1rem;
+}
+.member .findidok button{
+    width: 326px;
+}
+.member .findpw {
+    width: 360px;
+    padding: 1rem;
+}
+.member .findpw button{
+    width: 326px;
+}
