@@ -9,6 +9,7 @@ const BoardEdit = () => {
         title: '',
         category: '',
         content: '',
+        storedFileName: ''
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -86,7 +87,7 @@ const BoardEdit = () => {
                 <Form className='boardWrite' ref={formRef} onSubmit={handleSubmit} encType='multipart/form-data'>
                     <InputGroup>
                         <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>카테고리</InputGroup.Text>
-                        <Form.Select name='category' onChange={e => setCategory(e.target.value)}>
+                        <Form.Select name='category' defaultValue={data.category} onChange={e => setCategory(e.target.value)}>
                             <option value="">카테고리 선택</option>
                             <option value="korean">국어</option>
                             <option value="english">영어</option>
@@ -96,7 +97,7 @@ const BoardEdit = () => {
                     </InputGroup>
                     <InputGroup>
                         <InputGroup.Text style={{ width: '100px', fontWeight: 'bold' }}>제목</InputGroup.Text>
-                        <Form.Control type="text" name='title' onChange={e => setTitle(e.target.value)} />
+                        <Form.Control type="text" name='title' defaultValue={data.title} onChange={e => setTitle(e.target.value)} />
                     </InputGroup>
 
                     <Form.Group>
@@ -108,7 +109,7 @@ const BoardEdit = () => {
                             as="textarea"
                             style={{ height: '400px' }}
                             name='content'
-
+                            defaultValue={data.content}
                             onChange={e => setContent(e.target.value)}
                             required
                         />

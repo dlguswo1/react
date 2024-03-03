@@ -31,7 +31,7 @@ const Main1 = () => {
                 console.log(data)
             })
             .catch(err => setError(err))
-    },[])
+    }, [])
 
     if (loading) return <div>로딩중..</div>;
     if (error) return <div>에러가 발생했습니다</div>;
@@ -58,9 +58,11 @@ const Main1 = () => {
                             <Carousel className="carousel">
                                 {data.slice(0, 3).map((item) => (
                                     <Carousel.Item>
-                                        <img src={`/upload/${item.storedFileName}`}
-                                            className="image"
-                                        />
+                                        {item.fileAttached === 1 ? (
+                                            <><img src={`/upload/${item.storedFileName}`} className="image" /><br /></>
+                                        ) : (
+                                           <p> 첨부파일이 없습니다.</p>
+                                        )}
                                         <Carousel.Caption>
                                             <h3>{item.title}</h3>
                                         </Carousel.Caption>

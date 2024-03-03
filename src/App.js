@@ -28,10 +28,11 @@ import { Form } from 'react-bootstrap';
 function App() {
 
   // 메인 페이지 설정
-  const [mainPage, setMainPage] = useState('main1');
   const location = useLocation();
+  const mainPage = location.state?.mainPage || 'main1';
+  
 
-  const [mainComponent, setMainComponent] = useState('main1');
+  // const [mainComponent, setMainComponent] = useState('main1');
 
 
   // 세션
@@ -52,6 +53,8 @@ function App() {
     }
   }, [isLogin]);
 
+  // 메인 페이지 변경 함수
+
 
   return (
 
@@ -59,7 +62,7 @@ function App() {
       <Header isLogin={isLogin} />
       <header className="App-header">
         <Routes>
-        <Route path="/" element={mainComponent === 'main1' ? <Main1 /> : mainComponent === 'main2' ? <Main2 /> : <Main3 />} />
+        <Route path="/" element={mainPage === 'main1' ? <Main1 /> : mainPage === 'main2' ? <Main2 /> : <Main3 />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/main1" element={<Main1 />} />
           <Route path="/main2" element={<Main2 />} />

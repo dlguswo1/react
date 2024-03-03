@@ -15,8 +15,8 @@ const Admin = () => {
     const handleButtonClick = (page) => {
         // 버튼 클릭 시 메인 페이지 설정
         setMainPage(page);
-        alert("페이지 설정 되었습니다.");
-        navigateUrl('/');
+        // alert("페이지 설정 되었습니다.");
+        navigate(`/`, {state: {mainPage:page}});
     };
 
     const memberId = sessionStorage.getItem("members_id");
@@ -44,6 +44,8 @@ const Admin = () => {
         updatedPages[index].content = value;
         setPages(updatedPages);
     };
+
+    
 
     return (
         <div>

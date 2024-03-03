@@ -128,3 +128,27 @@ section.notice {}
 .popup-content h4 {
     text-align: center;
 }
+
+
+
+.carousel-inner {
+    min-width: 700px;
+    min-height: 400px;
+    text-align: center;
+}
+
+.image-container {
+    position: relative;
+  }
+  
+  .image-container img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .image-container .no-image-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
