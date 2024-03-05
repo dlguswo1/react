@@ -10,11 +10,14 @@ const Header = (props) => {
         axios.get('/logoutReact')
             .then(() => {
                 sessionStorage.clear();
+                localStorage.clear();
                 document.location.href = "/";
             })
             .catch(err => console.log(err))
     }
 
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken)
     const memberId = sessionStorage.getItem("members_id")
     console.log(memberId)
     

@@ -45,7 +45,9 @@ const Main1 = () => {
         setPopupView(false);
     }
 
+    // const accessToken = localStorage.getItem("accessToken")
     const memberId = sessionStorage.getItem("members_id")
+    // console.log(accessToken);
 
 
     return (
