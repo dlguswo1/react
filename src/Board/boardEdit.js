@@ -61,7 +61,8 @@ const BoardEdit = () => {
         try {
             const response = await axios.post(`/boardEdit/${id}`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data' // 헤더에 Content-Type 설정
+                    'Content-Type': 'multipart/form-data', // 헤더에 Content-Type 설정
+                    'Authorization' : `Bearer ${token}`
                 }
             });
             if (response.status === 200) {
@@ -73,6 +74,9 @@ const BoardEdit = () => {
             console.log(error)
         }
     };
+
+    const token = localStorage.getItem('accesstoken')
+    console.log(token)
 
     return (
         <Container>

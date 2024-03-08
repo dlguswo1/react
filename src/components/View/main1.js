@@ -28,7 +28,6 @@ const Main1 = () => {
             .then(res => {
                 setData(res.data);
                 setLoading(false);
-                console.log(data)
             })
             .catch(err => setError(err))
     }, [])
@@ -72,6 +71,22 @@ const Main1 = () => {
                                 ))}
                             </Carousel>
                         )}
+                        {/* {data.length > 0 && (
+                            <Carousel className="carousel">
+                                {data.slice(0, Math.min(3, data.length)).map((item) => (
+                                    <Carousel.Item key={item.id}>
+                                        {item.fileAttached === 1 ? (
+                                            <><img src={`/upload/${item.storedFileName}`} className="image" /><br /></>
+                                        ) : (
+                                            <p> 첨부파일이 없습니다.</p>
+                                        )}
+                                        <Carousel.Caption>
+                                            <h3>{item.title}</h3>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                ))}
+                            </Carousel>
+                        )} */}
                     </div>
                 </div>
 

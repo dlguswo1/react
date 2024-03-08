@@ -17,8 +17,7 @@ function Login() {
       .then((res) => {
         sessionStorage.setItem("member_id", res.data.memberId);
         sessionStorage.setItem("members_id", res.data.id);
-        // localStorage.setItem("accessToken", res.data.accessToken);
-        // localStorage.setItem("refreshToken", res.data.refreshToken);
+        localStorage.setItem("accesstoken",res.data.accessToken)
         document.location.href = "/";
       })
       .catch((err) => {

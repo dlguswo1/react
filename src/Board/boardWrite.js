@@ -34,13 +34,13 @@ const BoardWrite = () => {
     }
 
     try {
-      // const token = localStorage.getItem('accessToken')
       const response = await axios.post('/boardWrite', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 헤더에 Content-Type 설정
-          // 'Authorization' : `Bearer ${token}`
+          'Authorization' : `Bearer ${token}`
         }
       });
+      
 
 
       if (response.status === 200) {
@@ -53,6 +53,8 @@ const BoardWrite = () => {
     }
   };
   console.log(category)
+  const token = localStorage.getItem('accesstoken')
+  console.log(token)
 
   return (
 
