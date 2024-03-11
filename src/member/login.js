@@ -9,8 +9,9 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const url = process.env.REACT_APP_SERVER_IP
     axios
-      .post('/login', { // 로그인 요청
+      .post( `${url}/login`, { // 로그인 요청
         memberId: formRef.current.memberId.value,
         memberPw: formRef.current.memberPw.value
       })
@@ -22,9 +23,10 @@ function Login() {
       })
       .catch((err) => {
         // alert("아이디 또는 비밀번호를 올바르게 입력해주세요.");
-        alert(err.response.data);
+        console.log(err);
       });
   };
+  console.log(process.env.REACT_APP_SERVER_IP);
   return (
     <div className="Login member">
       <Form className='login' validated={false} ref={formRef} onSubmit={handleSubmit}>

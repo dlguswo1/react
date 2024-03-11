@@ -18,7 +18,7 @@ function Join() {
       return;
     }
     try {
-      const response = await axios.post("/join", {
+      const response = await axios.post(`/join`, {
         memberId: memberId,
         memberPw: memberPw,
       }

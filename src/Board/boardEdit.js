@@ -59,7 +59,7 @@ const BoardEdit = () => {
         }
 
         try {
-            const response = await axios.post(`/boardEdit/${id}`, formData, {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_IP}/boardEdit/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data', // 헤더에 Content-Type 설정
                     'Authorization' : `Bearer ${token}`

@@ -8,13 +8,14 @@ const Recall = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    axios.get(`/boardDelete/${id}`)
+    axios.get(`${process.env.REACT_APP_SERVER_IP}/boardDelete/${id}`)
     .then((res)=>{
         alert("삭제 성공")
         navigate('/');
     })
     .catch(err => {
         alert("삭제 실패")
+        navigate('/');
     })
 
     return (

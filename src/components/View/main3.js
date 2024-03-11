@@ -27,7 +27,7 @@ const Main3 = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`/main3`)
+        axios.get(`${process.env.REACT_APP_SERVER_IP}/main3`)
             .then(res => {
                 setData(res.data);
                 setLoading(false);

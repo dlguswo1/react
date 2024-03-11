@@ -24,7 +24,7 @@ const Main1 = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`/main1`)
+        axios.get(`${process.env.REACT_APP_SERVER_IP}/main1`)
             .then(res => {
                 setData(res.data);
                 setLoading(false);
@@ -52,17 +52,20 @@ const Main1 = () => {
     return (
         <div className="center_main">
 
-            <section class="notice">
-                <div class="page-title">
-                    <div class="container">
+            <section className="notice">
+                <div className="page-title">
+                    <div className="container">
                         {data.length > 0 && (
                             <Carousel className="carousel">
-                                {data.slice(0, 3).map((item) => (
+                                {data && data.slice(0, 3).map((item) => (
                                     <Carousel.Item>
                                         {item.fileAttached === 1 ? (
-                                            <><img src={`/upload/${item.storedFileName}`} className="image" /><br /></>
+                                            <>
+                                                <img src={`/upload/${item.storedFileName}`} className="image" />
+                                                <br />
+                                            </>
                                         ) : (
-                                           <p> 첨부파일이 없습니다.</p>
+                                            <p>첨부파일이 없습니다.</p>
                                         )}
                                         <Carousel.Caption>
                                             <h3>{item.title}</h3>

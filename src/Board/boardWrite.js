@@ -34,7 +34,7 @@ const BoardWrite = () => {
     }
 
     try {
-      const response = await axios.post('/boardWrite', formData, {
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_IP}/boardWrite`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 헤더에 Content-Type 설정
           'Authorization' : `Bearer ${token}`
@@ -52,9 +52,11 @@ const BoardWrite = () => {
       console.log(error)
     }
   };
-  console.log(category)
+
   const token = localStorage.getItem('accesstoken')
   console.log(token)
+  const memberId = sessionStorage.getItem("memberId")
+  console.log(memberId)
 
   return (
 

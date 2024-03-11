@@ -7,7 +7,7 @@ import axios from 'axios';
 const Header = (props) => {
 
     const logOut = () => {
-        axios.get('/logoutReact',
+        axios.get(`${process.env.REACT_APP_SERVER_IP}/logoutReact`,
         { headers : {
             'Authorization' : `Bearer ${token}`
         }})
