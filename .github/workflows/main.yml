@@ -1,0 +1,72 @@
+name: react test                    # Workflow 이름
+on:                                  # Event 감지
+  push:
+    branches:
+      - master
+
+env:
+  S3_BUCKET_NAME: githubactionpipeline
+  
+jobs:                                # Job 설정
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code.   # Repo checkout
+        uses: actions/checkout@v3
+      
+      - name: Use Node.js 20          # Node.js 20 사용
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+        
+      - name: Install dependencies    # 의존 파일 설치
+        run: npm install
+      
+      - name: Generate build          # React Build
+        run: npm run build
+        env:
+          CI: ""
+          
+      # # 디렉토리 생성
+      # - name: Make dir
+      #   run: mkdir -p deploy
+        
+      # # build 복사
+      # - name: Copy build
+      #   run: cp .build ./deploy
+
+      # 
+      # - name: make zip file
+      #   run: zip -r ./githubactionspring ./deploy
+      #   shell: bash
+
+      # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "REACT_APP_SERVER_IP=$REACT_APP_SERVER_IP" >> .env
+        env:
+          REACT_APP_SERVER_IP: ${{ secrets.REACT_APP_SERVER_IP }}
+
+      - name: Configure AWS credentials         # Upload build file to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.REACT_ACCESSKEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
+        run: |
+          aws s3 cp --recursive --region ap-northeast-2 build s3://githubactionspring
+
+      # appspec.yml 파일 복사
+      - name: Copy appspec.yml
+        run: cp appspec.yml ./deploy
+
+        # Deploy
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.REACT_ACCESSKEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
+        run: |
+          aws deploy create-deployment \
+          --application-name pipeline \
+          --deployment-group-name pipeline-group \
+          --file-exists-behavior OVERWRITE \
+          --s3-location bucket=githubactionpipeline,key=githubactionpipeline.zip,bundleType=zip \
+          --region ap-northeast-2
