@@ -37,11 +37,11 @@ jobs:                                # Job 설정
       #   shell: bash
 
       	# Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
-      # - name: Generate Environment Variables File for Production
-      #   run: |
-      #     echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL" >> .env
-      #   env:
-      #     REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "REACT_APP_SERVER_IP=$REACT_APP_SERVER_IP" >> .env
+        env:
+          REACT_APP_SERVER_IP: ${{ secrets.REACT_APP_SERVER_IP }}
 
       - name: Deploy                  # Upload build file to S3
         env:
