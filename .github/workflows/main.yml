@@ -35,6 +35,10 @@ jobs:                                # Job 설정
       - name: Copy build
         run: cp -r ./build ./buildZip
 
+     # appspec.yml 파일 복사
+      - name: Copy appspec.yml
+        run: cp appspec.yml ./buildZip
+
       - name: make zip file
         run: zip -r ./githubactionreact ./buildZip
         shell: bash
@@ -63,10 +67,6 @@ jobs:                                # Job 설정
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
         run: |
           aws s3 cp --region ap-northeast-2 ./githubactionreact.zip s3://githubactionspring
-
-      # appspec.yml 파일 복사
-      - name: Copy appspec.yml
-        run: cp appspec.yml ./buildZip
 
       # Deploy
       - name: Deploy
