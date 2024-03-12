@@ -18,3 +18,5 @@ jobs:                                # Job 설정
       
       - name: Generate build          # React Build
         run: npm run build
+        env:
+          CI: ""
