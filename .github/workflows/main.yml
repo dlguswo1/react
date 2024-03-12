@@ -2,7 +2,11 @@ name: react test                    # Workflow 이름
 on:                                  # Event 감지
   push:
     branches:
-      - master                        
+      - master
+
+env:
+  S3_BUCKET_NAME: githubactionpipeline
+  
 jobs:                                # Job 설정
   build:
     runs-on: ubuntu-latest
@@ -43,9 +47,26 @@ jobs:                                # Job 설정
         env:
           REACT_APP_SERVER_IP: ${{ secrets.REACT_APP_SERVER_IP }}
 
-      - name: Deploy                  # Upload build file to S3
+      - name: Configure AWS credentials         # Upload build file to S3
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.REACT_ACCESSKEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
         run: |
           aws s3 cp --recursive --region ap-northeast-2 build s3://githubactionspring
+
+      # appspec.yml 파일 복사
+      - name: Copy appspec.yml
+        run: cp appspec.yml ./deploy
+
+        # Deploy
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.test_access_key }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.test_secret_access_key }}
+        run: |
+          aws deploy create-deployment \
+          --application-name pipeline \
+          --deployment-group-name pipeline-group \
+          --file-exists-behavior OVERWRITE \
+          --s3-location bucket=githubactionpipeline,key=githubactionpipeline.zip,bundleType=zip \
+          --region ap-northeast-2
