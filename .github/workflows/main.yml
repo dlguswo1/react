@@ -27,18 +27,17 @@ jobs:                                # Job 설정
         env:
           CI: ""
           
-      # # 디렉토리 생성
-      # - name: Make dir
-      #   run: mkdir -p deploy
+      # 디렉토리 생성
+      - name: Make dir
+        run: mkdir -p buildZip
         
-      # # build 복사
-      # - name: Copy build
-      #   run: cp .build ./deploy
+      # build 복사
+      - name: Copy build
+        run: cp ./build ./buildZip
 
-      # 
-      # - name: make zip file
-      #   run: zip -r ./githubactionspring ./deploy
-      #   shell: bash
+      - name: make zip file
+        run: zip -r ./githubactionreact ./buildZip
+        shell: bash
 
       # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
       - name: Generate Environment Variables File for Production
@@ -52,7 +51,7 @@ jobs:                                # Job 설정
           AWS_ACCESS_KEY_ID: ${{ secrets.REACT_ACCESSKEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
         run: |
-          aws s3 cp --recursive --region ap-northeast-2 build s3://githubactionspring
+          aws s3 cp --region ap-northeast-2 ./githubactionreact.zip s3://githubactionspring
 
       # appspec.yml 파일 복사
       - name: Copy appspec.yml
