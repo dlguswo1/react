@@ -49,9 +49,9 @@ const Main2 = () => {
     }
 
     const memberId = sessionStorage.getItem("members_id")
+    console.log(memberId);
 
     // 카테고리 분류
-    console.log(data)
     const mathData = data.filter(item => item.category === "math");
     const engData = data.filter(item => item.category === "english");
     const korData = data.filter(item => item.category === "korean");
