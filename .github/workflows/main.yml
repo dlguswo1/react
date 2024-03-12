@@ -27,35 +27,35 @@ jobs:                                # Job 설정
         env:
           CI: ""
           
-      # # 디렉토리 생성
-      # - name: Make dir
-      #   run: mkdir -p buildZip
+      # 디렉토리 생성
+      - name: Make dir
+        run: mkdir -p buildZip
         
-      # # build 복사
-      # - name: Copy build
-      #   run: cp ./build ./buildZip
+      # build 복사
+      - name: Copy build
+        run: cp -r ./build ./buildZip
 
-      # - name: make zip file
-      #   run: zip -r ./githubactionreact ./buildZip
-      #   shell: bash
+      - name: make zip file
+        run: zip -r ./githubactionreact ./buildZip
+        shell: bash
 
-      - name: Zip build directory
-        run: zip -r build.zip build
+      # - name: Zip build directory
+      #   run: zip -r build.zip build
 
-      - name: Upload build to S3
-        uses: actions/aws/cli@v2
-        with:
-          args: s3 cp build.zip s3://${{ env.S3_BUCKET_NAME }}/
+      # - name: Upload build to S3
+      #   uses: actions/aws/cli@v2
+      #   with:
+      #     args: s3 cp build.zip s3://${{ env.S3_BUCKET_NAME }}/
 
-      - name: Configure AWS credentials
-        run: aws configure set aws_access_key_id ${{ secrets.REACT_ACCESSKEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.REACT_SECRET_ACCESSKEY_ID }} && aws configure set default.region ap-northeast-2
+      # - name: Configure AWS credentials
+      #   run: aws configure set aws_access_key_id ${{ secrets.REACT_ACCESSKEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.REACT_SECRET_ACCESSKEY_ID }} && aws configure set default.region ap-northeast-2
 
-      # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
-      - name: Generate Environment Variables File for Production
-        run: |
-          echo "REACT_APP_SERVER_IP=$REACT_APP_SERVER_IP" >> .env
-        env:
-          REACT_APP_SERVER_IP: ${{ secrets.REACT_APP_SERVER_IP }}
+      # # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
+      # - name: Generate Environment Variables File for Production
+      #   run: |
+      #     echo "REACT_APP_SERVER_IP=$REACT_APP_SERVER_IP" >> .env
+      #   env:
+      #     REACT_APP_SERVER_IP: ${{ secrets.REACT_APP_SERVER_IP }}
 
       - name: Configure AWS credentials         # Upload build file to S3
         env:
@@ -66,17 +66,17 @@ jobs:                                # Job 설정
 
       # appspec.yml 파일 복사
       - name: Copy appspec.yml
-        run: cp appspec.yml ./deploy
+        run: cp appspec.yml ./buildZip
 
-        # Deploy
+      # Deploy
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.REACT_ACCESSKEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
         run: |
           aws deploy create-deployment \
-          --application-name pipeline \
-          --deployment-group-name pipeline-group \
+          --application-name spring  \
+          --deployment-group-name spring-group \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=githubactionpipeline,key=githubactionpipeline.zip,bundleType=zip \
+          --s3-location bucket=githubactionspring,key=githubactionreact.zip,bundleType=zip \
           --region ap-northeast-2
