@@ -80,11 +80,7 @@ const Main3 = () => {
             <section class="notice">
                 <div class="page-title">
                     <div class="container">
-                        <div className="board-write">
-                            {memberId && (
-                                <Link to='/boardWrite'>게시글 작성</Link>
-                            )}
-                        </div>
+
                     </div>
                 </div>
 
