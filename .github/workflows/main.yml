@@ -22,3 +22,30 @@ jobs:                                # Job 설정
         run: npm run build
         env:
           CI: ""
+          
+      # # 디렉토리 생성
+      # - name: Make dir
+      #   run: mkdir -p deploy
+        
+      # # build 복사
+      # - name: Copy build
+      #   run: cp .build ./deploy
+
+      # 
+      # - name: make zip file
+      #   run: zip -r ./githubactionspring ./deploy
+      #   shell: bash
+
+      	# Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
+      # - name: Generate Environment Variables File for Production
+      #   run: |
+      #     echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL" >> .env
+      #   env:
+      #     REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+
+      - name: Deploy                  # Upload build file to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.REACT_ACCESSKEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
+        run: |
+          aws s3 cp --recursive --region ap-northeast-2 build s3://githubactionspring
