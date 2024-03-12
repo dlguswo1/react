@@ -27,17 +27,28 @@ jobs:                                # Job 설정
         env:
           CI: ""
           
-      # 디렉토리 생성
-      - name: Make dir
-        run: mkdir -p buildZip
+      # # 디렉토리 생성
+      # - name: Make dir
+      #   run: mkdir -p buildZip
         
-      # build 복사
-      - name: Copy build
-        run: cp ./build ./buildZip
+      # # build 복사
+      # - name: Copy build
+      #   run: cp ./build ./buildZip
 
-      - name: make zip file
-        run: zip -r ./githubactionreact ./buildZip
-        shell: bash
+      # - name: make zip file
+      #   run: zip -r ./githubactionreact ./buildZip
+      #   shell: bash
+
+      - name: Zip build directory
+        run: zip -r build.zip build
+
+      - name: Upload build to S3
+        uses: actions/aws/cli@v2
+        with:
+          args: s3 cp build.zip s3://${{ env.S3_BUCKET_NAME }}/
+
+      - name: Configure AWS credentials
+        run: aws configure set aws_access_key_id ${{ secrets.REACT_ACCESSKEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.REACT_SECRET_ACCESSKEY_ID }} && aws configure set default.region ap-northeast-2
 
       # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
       - name: Generate Environment Variables File for Production
