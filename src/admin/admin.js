@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { Button, ButtonGroup, Row, Col } from 'react-bootstrap';
@@ -20,7 +20,7 @@ const Admin = () => {
     };
 
     const memberId = sessionStorage.getItem("members_id");
-    const isAdministrator = sessionStorage.getItem("members_id") === "1";
+    // const isAdministrator = sessionStorage.getItem("members_id") === "1";
     const navigate = useNavigate();
     const [pages, setPages] = useState([]);
 

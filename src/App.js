@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link, Route, Routes, redirect, useLocation, Navigate } from 'react-router-dom';
+import {  Route, Routes,  useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import MainList from './components/mainList'
 
 //view
 import Main1 from './components/View/main1';
@@ -22,7 +20,6 @@ import BoardEdit from './Board/boardEdit';
 import Header from './header/header';
 import Admin from './admin/admin';
 import Recall from './components/View/reCall';
-import { Form } from 'react-bootstrap';
 
 
 function App() {
