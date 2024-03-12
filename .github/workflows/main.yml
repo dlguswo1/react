@@ -61,8 +61,8 @@ jobs:                                # Job 설정
         # Deploy
       - name: Deploy
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.test_access_key }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.test_secret_access_key }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.REACT_ACCESSKEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
         run: |
           aws deploy create-deployment \
           --application-name pipeline \
