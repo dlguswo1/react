@@ -49,7 +49,7 @@ const Main2 = () => {
     }
 
     const memberId = sessionStorage.getItem("members_id")
-    console.log(memberId);
+    console.log(memberId)
 
     // 카테고리 분류
     const mathData = data.filter(item => item.category === "math");
