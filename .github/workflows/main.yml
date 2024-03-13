@@ -75,8 +75,8 @@ jobs:                                # Job 설정
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
         run: |
           aws deploy create-deployment \
-          --application-name spring  \
-          --deployment-group-name spring-group \
+          --application-name react  \
+          --deployment-group-name react-group \
           --file-exists-behavior OVERWRITE \
           --s3-location bucket=githubactionreact,key=githubactionreact.zip,bundleType=zip \
           --region ap-northeast-2
