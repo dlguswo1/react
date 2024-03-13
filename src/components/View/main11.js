@@ -44,7 +44,7 @@ function Main11() {
         setPopupView(false);
     }
 
-    const memberId = sessionStorage.getItem("members_id")
+    const memberId = sessionStorage.getItem("members_id");
 
 
     return (
