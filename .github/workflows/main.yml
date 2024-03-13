@@ -5,7 +5,7 @@ on:                                  # Event 감지
       - master
 
 env:
-  S3_BUCKET_NAME: githubactionpipeline
+  S3_BUCKET_NAME: githubactionreact
   
 jobs:                                # Job 설정
   build:
@@ -66,7 +66,7 @@ jobs:                                # Job 설정
           AWS_ACCESS_KEY_ID: ${{ secrets.REACT_ACCESSKEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_SECRET_ACCESSKEY_ID }}
         run: |
-          aws s3 cp --region ap-northeast-2 ./githubactionreact.zip s3://githubactionspring
+          aws s3 cp --region ap-northeast-2 ./githubactionreact.zip s3://githubactionreact
 
       # Deploy
       - name: Deploy
@@ -78,5 +78,5 @@ jobs:                                # Job 설정
           --application-name spring  \
           --deployment-group-name spring-group \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=githubactionspring,key=githubactionreact.zip,bundleType=zip \
+          --s3-location bucket=githubactionreact,key=githubactionreact.zip,bundleType=zip \
           --region ap-northeast-2
