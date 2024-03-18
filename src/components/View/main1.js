@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 //BootStrap
 import Carousel from 'react-bootstrap/Carousel';
@@ -15,6 +16,8 @@ import './main1.css'
 const Main1 = () => {
 
     const [clickedData, setClickedData] = useState(null);
+    const [clickComment, setclickComment] = useState(null);
+    const [commentInputVisible, setCommentInputVisible] = useState(false); // 댓글 입력 창 표시 여부
     const [PopupView, setPopupView] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -22,9 +25,11 @@ const Main1 = () => {
 
     ]);
 
+    const { id } = useParams();
+
     useEffect(() => {
         setLoading(true)
-        axios.get(`${process.env.REACT_APP_SERVER_IP}/main1`)
+        axios.get(`http://localhost:9999/main1`)
             .then(res => {
                 setData(res.data);
                 setLoading(false);
@@ -32,21 +37,75 @@ const Main1 = () => {
             .catch(err => setError(err))
     }, [])
 
+    const submitComment = () => {
+
+        const writer = document.getElementById("commentWriter").value;
+        const contents = document.getElementById("commentContents").value;
+
+        // const formData = {
+        //     'commentWriter' : writer,
+        //     'commentContents' : contents,
+        //     'boardId' : clickedData.id
+        // };
+
+        // const formData = new FormData();
+
+        // formData.append('commentWriter', writer);
+        // formData.append('commentContents', contents);
+        // formData.append('boardId', clickedData.id);
+
+        axios.post(`${process.env.REACT_APP_SERVER_IP}/comments`,
+            {
+                'commentWriter': writer,
+                'commentContents': contents,
+                'boardId': clickedData.id
+            }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(res => {
+                const newComment = res.data;
+                setclickComment(prevComments => [...prevComments, newComment]);
+            })
+            .catch(err => setError(err));
+    }
+
     if (loading) return <div>로딩중..</div>;
     if (error) return <div>에러가 발생했습니다</div>;
+
+    // const clickData = () => {
+    //     axios.get(`/board/${id}`)
+    //     .then(res => {
+    //         setClickedData(res.clickData);
+    //     })
+    //     .catch(err => setError(false))
+    // }
 
     const handleClick = (data) => {
         setClickedData(data);
         setPopupView(true);
+        axios.get(`board/${data.id}`)
+            .then(res => {
+                setclickComment(res.data)
+            })
+            .catch(err => setError(false))
     }
+    console.log(clickComment)
 
     const handleClosePopup = () => {
         setPopupView(false);
+        setCommentInputVisible(false);
     }
 
-    // const accessToken = localStorage.getItem("accessToken")
+    const writeComment = () => {
+        setCommentInputVisible(true); // 댓글 입력 창을 표시
+    }
+
+
     const memberId = sessionStorage.getItem("members_id")
-    // console.log(accessToken);
+    const token = localStorage.getItem('accesstoken')
+    console.log(token)
 
 
     return (
@@ -57,13 +116,15 @@ const Main1 = () => {
                     <div className="container">
                         {data.length > 0 && (
                             <Carousel className="carousel">
-                                {data && data.slice(0, 3).map((item) => (
-                                    <Carousel.Item>
-                                        {item.fileAttached === 1 ? (
-                                            <>
-                                                <img src={`/upload/${item.storedFileName}`} className="image" />
-                                                <br />
-                                            </>
+                                {data && data.slice(0, 3).map((item, index) => (
+                                    <Carousel.Item key={index}>
+                                        {item.fileAttached === 1 && item.storedFileName ? (
+                                            item.storedFileName.map((fileName, idx) => (
+                                                <div key={idx}>
+                                                    <img src={`${process.env.REACT_APP_SERVER_IP}/upload/${fileName}`} className="image" />
+                                                    <br />
+                                                </div>
+                                            ))
                                         ) : (
                                             <p>첨부파일이 없습니다.</p>
                                         )}
@@ -74,22 +135,6 @@ const Main1 = () => {
                                 ))}
                             </Carousel>
                         )}
-                        {/* {data.length > 0 && (
-                            <Carousel className="carousel">
-                                {data.slice(0, Math.min(3, data.length)).map((item) => (
-                                    <Carousel.Item key={item.id}>
-                                        {item.fileAttached === 1 ? (
-                                            <><img src={`/upload/${item.storedFileName}`} className="image" /><br /></>
-                                        ) : (
-                                            <p> 첨부파일이 없습니다.</p>
-                                        )}
-                                        <Carousel.Caption>
-                                            <h3>{item.title}</h3>
-                                        </Carousel.Caption>
-                                    </Carousel.Item>
-                                ))}
-                            </Carousel>
-                        )} */}
                     </div>
                 </div>
 
@@ -141,18 +186,66 @@ const Main1 = () => {
             {PopupView && (
                 <div className="popup">
                     <div className="popup-content">
-                        <h4>제목 : {clickedData.title}</h4><br />
-                        {clickedData.fileAttached === 1 && (
-                            <><img src={`/upload/${clickedData.storedFileName}`} className="image" /><br /></>
+                        <h4>제목d : {clickedData.title}</h4><br />
+                        {clickedData && clickedData.fileAttached && clickedData.storedFileName && (
+                            <>
+                                {clickedData.storedFileName.map((fileName, index) => (
+                                    <div key={index}>
+                                        {fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') ? (
+                                            <div>
+                                                <img src={`/upload/${fileName}`} className="image" />
+                                                <br />
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                {fileName.endsWith('.txt') ? (
+                                                    <a href={`/upload/${fileName}`} download>{fileName}</a>
+                                                ) : (
+                                                    <p>{fileName}</p>
+                                                )}
+                                                <br />
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </>
                         )}
                         <p>내용 :  {clickedData.content}</p>
                         <p>작성자 : {clickedData.memberId}</p>
                         <p>카테고리 : {clickedData.category}</p>
                         <p>등록일자 : {new Date(clickedData.createDate).toLocaleString()}</p>
                         <p>수정일자 : {clickedData.updateDate ? new Date(clickedData.updateDate).toLocaleString() : '날짜 정보 없음'}</p>
-                        <button onClick={handleClosePopup}>닫기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        {clickComment && (
+                            <div>
+                                <h2>댓글 목록</h2>
+                                <div id="comments">
+                                    {clickComment.map(comment => (
+                                        <div className="comment">
+                                            <div className="writer">작성자 : {comment.commentWriter}</div>
+                                            <div className="content">내용 : {comment.commentContents}</div>
+                                            <div className="time">작성 시간 : {comment.commentSaveTime}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+
+                        {commentInputVisible && (
+                            <div>
+                                <input type="text" id="commentWriter" placeholder="작성자" />
+                                <input type="text" id="commentContents" placeholder="댓글 내용" />
+                                <button onClick={submitComment}>댓글 제출</button>
+                            </div>
+                        )}
+
+                        <br />
+
+                        <button onClick={handleClosePopup}>닫기</button>
                         {(memberId == clickedData.members_Id || memberId === '1') && (
                             <>
+                                <button onClick={writeComment}>댓글 작성하기</button>
                                 <Link to={`/boardEdit/${clickedData.id}`}>
                                     <button>글 수정</button>
                                 </Link>&nbsp;
@@ -161,6 +254,10 @@ const Main1 = () => {
                                 </Link>
                             </>
                         )}
+
+                        <div>
+
+                        </div>
                     </div>
                 </div>
             )}

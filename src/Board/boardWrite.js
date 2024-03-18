@@ -87,7 +87,7 @@ const BoardWrite = () => {
           </InputGroup>
 
           <Form.Group>
-            <Form.Control type='file' name='file' />
+            <Form.Control type='file' name='file' multiple/>
           </Form.Group>
 
           <Form.Group className="mb-4">

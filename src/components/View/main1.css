@@ -152,3 +152,22 @@ section.notice {}
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  
+  .comment {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.comment .writer {
+    font-weight: bold;
+    color: #333;
+}
+.comment .content {
+    margin-top: 5px;
+    color: #666;
+}
+.comment .time {
+    font-size: 0.8em;
+    color: #888;
+}

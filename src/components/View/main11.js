@@ -23,7 +23,7 @@ function Main11() {
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`/main1`)
+        axios.get(`/main11`)
             .then(res => {
                 setData(res.data);
                 setLoading(false);

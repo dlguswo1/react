@@ -18,7 +18,7 @@ function Join() {
       return;
     }
     try {
-      const response = await axios.post(`/join`, {
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_IP}/join`, {
         memberId: memberId,
         memberPw: memberPw,
       }

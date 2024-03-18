@@ -24,7 +24,7 @@ const BoardEdit = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`/boardEdit/${id}`)
+        axios.get(`${process.env.REACT_APP_SERVER_IP}/boardEdit/${id}`)
             .then(res => {
                 setData(res.data);
                 setLoading(false);
@@ -105,7 +105,7 @@ const BoardEdit = () => {
                     </InputGroup>
 
                     <Form.Group>
-                        <Form.Control type='file' name='file' />
+                        <Form.Control type='file' name='file' multiple/>
                     </Form.Group>
 
                     <Form.Group className="mb-4">
