@@ -29,7 +29,7 @@ const Main1 = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`http://localhost:9999/main1`)
+        axios.get(`${process.env.REACT_APP_SERVER_IP}/main1`)
             .then(res => {
                 setData(res.data);
                 setLoading(false);
@@ -71,7 +71,7 @@ const Main1 = () => {
             .catch(err => setError(err));
     }
 
-    if (loading) return <div>로딩중..</div>;
+    if (loading) return <div>로딩중 xx</div>;
     if (error) return <div>에러가 발생했습니다</div>;
 
     // const clickData = () => {
