@@ -18,7 +18,7 @@ function Join() {
       return;
     }
     try {
-      const response = await axios.post(`${process.env.REACT_APP_SERVER_IP}/join`, {
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_IP}/${process.env.REACT_APP_SERVER_NAME}/join`, {
         memberId: memberId,
         memberPw: memberPw,
       }
@@ -28,6 +28,9 @@ function Join() {
       }
       console.log(response.data);
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert("이미 존재하는 아아디입니다.")
+      }
       console.error(error);
     }
 

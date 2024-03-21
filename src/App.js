@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Route, Routes,  useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -27,7 +27,7 @@ function App() {
   // 메인 페이지 설정
   const location = useLocation();
   const mainPage = location.state?.mainPage || 'main1';
-  
+
 
   // const [mainComponent, setMainComponent] = useState('main1');
 
@@ -59,7 +59,7 @@ function App() {
       <Header isLogin={isLogin} />
       <header className="App-header">
         <Routes>
-        <Route path="/" element={mainPage === 'main1' ? <Main1 /> : mainPage === 'main2' ? <Main2 /> : <Main3 />} />
+          <Route path="/" element={mainPage === 'main1' ? <Main1 /> : mainPage === 'main2' ? <Main2 /> : <Main3 />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/main1" element={<Main1 />} />
           <Route path="/main2" element={<Main2 />} />
@@ -71,6 +71,7 @@ function App() {
           <Route path="/boardWrite" element={<BoardWrite />} />
           <Route path={`/boardEdit/:id`} element={<BoardEdit />} />
           <Route path={`/boardDelete/:id`} element={<Recall />} />
+          <Route path={`/commentDelete/:id`} element={<Recall />} />
           <Route path="/main4" element={<Main4 />} />
           <Route path="/main5" element={<Main5 />} />
           <Route path="/main6" element={<Main6 />} />

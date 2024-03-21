@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, InputGroup, CloseButton } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,6 +11,32 @@ const BoardWrite = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
+  const [selectedFile, setSelectedFile] = useState([]);
+
+  // const handleFileChange = (e) => {
+  //   const fileList = e.target.files;
+  //   setSelectedFile([...fileList]); // 파일 선택 시 상태 업데이트
+  // };
+
+  const handleFileChange = (e) => {
+    const fileList = Array.from(e.target.files); // FileList 객체를 배열로 변환
+    setSelectedFile(prevFiles => [...prevFiles, ...fileList]); // 이전 파일들과 새로운 파일들을 합쳐서 업데이트
+  };
+
+  // const handleCancelFile = () => {
+  //   setSelectedFile(null); // 파일 취소 시 상태 업데이트
+  //   formRef.current.reset(); // 파일 입력 필드 리셋
+  // };
+
+  const handleCancelFile = (indexToRemove) => {
+    setSelectedFile(prevFiles => {
+      const updatedFiles = prevFiles.filter((_, index) => index !== indexToRemove);
+      if (updatedFiles.length === 0) {
+        formRef.current.reset(); // 파일 입력 필드 리셋
+      }
+      return updatedFiles.length === 0 ? null : updatedFiles; // 파일 상태 초기화 조건 추가
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,18 +55,26 @@ const BoardWrite = () => {
     formData.append('title', title);
     formData.append('content', content);
     formData.append('category', category);
-    if (e.target.elements.file.files.length > 0) {
-      formData.append('boardFile', e.target.elements.file.files[0]);
+    // if (e.target.elements.file.files.length > 0) {
+    //   formData.append('boardFile', e.target.elements.file.files[0]);
+    // }
+
+    const files = e.target.elements.file.files;
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append(`boardFile`, files[i]);
+      }
     }
+    console.log(files)
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_SERVER_IP}/boardWrite`, formData, {
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_IP}/${process.env.REACT_APP_SERVER_NAME}/boardWrite`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 헤더에 Content-Type 설정
-          'Authorization' : `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
       });
-      
+
 
 
       if (response.status === 200) {
@@ -55,7 +89,7 @@ const BoardWrite = () => {
 
   const token = localStorage.getItem('accesstoken')
   console.log(token)
-  const memberId = sessionStorage.getItem("memberId")
+  const memberId = localStorage.getItem("memberId")
   console.log(memberId)
 
   return (
@@ -87,7 +121,13 @@ const BoardWrite = () => {
           </InputGroup>
 
           <Form.Group>
-            <Form.Control type='file' name='file' multiple/>
+            <input type='file' name='file' onChange={handleFileChange} multiple />
+            {selectedFile && selectedFile.map((file, index) => ( // 파일 선택 시 각 파일마다 표시
+              <div key={index} style={{ display: 'flex' }}>
+                <p>{file.name}</p>
+                <CloseButton onClick={() => handleCancelFile(index)} className="mt-2" style={{ marginTop: '0' }} />
+              </div>
+            ))}
           </Form.Group>
 
           <Form.Group className="mb-4">

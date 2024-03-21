@@ -7,7 +7,7 @@ import axios from 'axios';
 const Header = (props) => {
 
     const logOut = () => {
-        axios.get(`${process.env.REACT_APP_SERVER_IP}/logoutReact`,
+        axios.get(`${process.env.REACT_APP_SERVER_IP}/${process.env.REACT_APP_SERVER_NAME}/logoutReact`,
         { headers : {
             'Authorization' : `Bearer ${token}`
         }})
@@ -20,9 +20,12 @@ const Header = (props) => {
     }
 
     const token = localStorage.getItem('accesstoken');
+    const role = localStorage.getItem('role')
 
     const isLogin = sessionStorage.getItem("isLogin") === "true";
     const isAdministrator = sessionStorage.getItem("members_id") === "1";
+
+    
     
 
     return (
@@ -31,7 +34,7 @@ const Header = (props) => {
                 <Navbar.Collapse id="responsive-navbar-nav">
 
                     <Nav>
-                        {(props.isLogin === true) ? (
+                        {token ? (
                             <>
                                 <Nav.Link onClick={logOut}>로그아웃</Nav.Link>
                             </>
@@ -41,7 +44,9 @@ const Header = (props) => {
                                 <Nav.Link><Link to='/join'>회원가입</Link></Nav.Link>
                             </>
                         )}
-                        {isAdministrator && <Nav.Link><Link to='/admin'>관리자 페이지 이동</Link></Nav.Link>}
+                        {/* {isAdministrator && <Nav.Link><Link to='/admin'>관리자 페이지 이동</Link></Nav.Link>} */}
+                        {role == 'ROLE_ADMIN' && <Nav.Link><Link to='/admin'>관리자 페이지 이동</Link></Nav.Link>}
+
                     </Nav>
                 </Navbar.Collapse>
             </Container>

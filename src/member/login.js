@@ -11,14 +11,16 @@ function Login() {
     e.preventDefault();
     const url = process.env.REACT_APP_SERVER_IP
     axios
-      .post( `${url}/login`, { // 로그인 요청
+      .post( `${url}/${process.env.REACT_APP_SERVER_NAME}/login`, { // 로그인 요청
         memberId: formRef.current.memberId.value,
         memberPw: formRef.current.memberPw.value
       })
       .then((res) => {
-        sessionStorage.setItem("member_id", res.data.memberId);
-        sessionStorage.setItem("members_id", res.data.id);
-        localStorage.setItem("accesstoken",res.data.accessToken)
+        // sessionStorage.setItem("member_id", res.data.memberId);
+        // sessionStorage.setItem("members_id", res.data.id);
+        localStorage.setItem("accesstoken",res.data.accessToken);
+        localStorage.setItem("role", res.data.role);
+        localStorage.setItem('memberId',res.data.memberId)
         document.location.href = "/";
       })
       .catch((err) => {

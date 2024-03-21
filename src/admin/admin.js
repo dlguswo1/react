@@ -19,12 +19,13 @@ const Admin = () => {
         navigate(`/`, {state: {mainPage:page}});
     };
 
-    const memberId = sessionStorage.getItem("members_id");
+    const role = localStorage.getItem('role')
+    // const memberId = sessionStorage.getItem("members_id");
     // const isAdministrator = sessionStorage.getItem("members_id") === "1";
     const navigate = useNavigate();
     const [pages, setPages] = useState([]);
 
-    if (memberId !== "1") {
+    if (role !== "ROLE_ADMIN") {
         return navigate("/")
     }
 
